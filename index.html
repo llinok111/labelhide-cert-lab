@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>labeltime-cert-lab — continuous-time label visibility certificate</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; font: 13px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; background: #0b0e14; color: #d7dce5; }
+  #app { display: grid; grid-template-columns: 1fr 360px; height: 100vh; }
+  #stage { position: relative; }
+  canvas { display: block; }
+  aside { border-left: 1px solid #1e2530; padding: 14px 16px; overflow-y: auto; }
+  h1 { font-size: 14px; margin: 0 0 8px; color: #8bd5ff; }
+  h2 { font-size: 12px; margin: 16px 0 6px; color: #9aa7b8; text-transform: uppercase; letter-spacing: .06em; }
+  select, button, input[type=range] { width: 100%; background: #141a24; color: #d7dce5; border: 1px solid #26303d; border-radius: 4px; padding: 5px 7px; font: inherit; }
+  button { cursor: pointer; margin-top: 6px; }
+  .kv { display: flex; justify-content: space-between; gap: 8px; padding: 2px 0; border-bottom: 1px dashed #1a212b; }
+  .kv b { color: #e8f1ff; font-weight: 600; }
+  .ok { color: #6ee7a8; } .bad { color: #ff8080; } .dim { color: #8b97a8; }
+  #overlay { position: absolute; left: 12px; bottom: 12px; background: #0f141ce0; border: 1px solid #222b38; border-radius: 6px; padding: 8px 10px; }
+  #cert { color: #6ee7a8; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="stage"><div id="overlay">
+    <div>frame <b id="frameNo">0</b>/<b id="frameMax">240</b> · t=<b id="tNow">0.0000</b></div>
+    <div id="cert">conflicts after suppression at t: 0</div>
+  </div></div>
+  <aside>
+    <h1>labeltime-cert-lab</h1>
+    <p class="dim">Exact continuous-time conflict intervals for moving 2D labels, plus the minimum total hide-time that makes every rendered frame clean. Same <code>src/core.mjs</code> runs here and in <code>node bench/verify.mjs</code>.</p>
+    <h2>Scene</h2>
+    <select id="sceneSel"></select>
+    <h2>Playback</h2>
+    <button id="play">play</button>
+    <input id="time" type="range" min="0" max="240" value="0" step="1" />
+    <h2>Certificate (from core.mjs)</h2>
+    <div id="stats"></div>
+    <h2>Legend</h2>
+    <div class="dim">red = in a conflict window · grey = hidden by the minimum hide-time plan · green = certified clean at t</div>
+  </aside>
+</div>
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+</script>
+<script type="module" src="./main.js"></script>
+</body>
+</html>
