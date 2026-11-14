@@ -11,7 +11,8 @@
 //     occluder rectangle that is strictly closer to the camera.
 //   * time domain is [t0, t1], normalised to [0,1] for the shipped scenes.
 
-export const TIME_EPS = 1e-9; // dimensionless time tolerance, disclosed in README
+// Only absolute constant in the whole core: breakpoint dedupe in timeline units.
+export const BREAKPOINT_EPS = 1e-12;
 
 const CLOSE = 1e-12;
 
@@ -154,7 +155,7 @@ function pc(x) {
 function uniqueSorted(xs) {
   const s = xs.slice().sort((a, b) => a - b);
   const out = [];
-  for (const x of s) if (!out.length || x - out[out.length - 1] > 1e-12) out.push(x);
+  for (const x of s) if (!out.length || x - out[out.length - 1] > BREAKPOINT_EPS) out.push(x);
   return out;
 }
 
@@ -169,7 +170,7 @@ export function conflictCells(scene, report) {
   for (let k = 0; k + 1 < bps.length; k++) {
     const lo = bps[k];
     const hi = bps[k + 1];
-    if (!(hi > lo + 1e-12)) continue;
+    if (!(hi > lo + BREAKPOINT_EPS)) continue;
     const mid = (lo + hi) / 2;
     let forced = 0;
     const edges = new Set();
