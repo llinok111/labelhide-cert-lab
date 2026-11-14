@@ -1,4 +1,4 @@
-# labeltime-cert-lab
+# labelhide-cert-lab
 
 **Promise: for 6 animated label scenes (81 labels, constant-velocity 2D rectangles + 5 occluders each),
 exactly locate all 33 continuous-time conflict windows (19 overlap + 14 occlusion) by solving linear
